@@ -25,8 +25,9 @@ Este script automatiza a organização anual do seu Trello, criando listas para 
 ## 📦 Instalação
 
 ```bash
-# Clone o repositório
-git clone [https://github.com/seu-usuario/trello-calendar-automator.git](https://github.com/seu-usuario/trello-calendar-automator.git)
+1. **Python 3.x** instalado.
+2. **Trello API Key e Token:** Obtenha em [trello.com/app-key](https://trello.com/app-key).
+3. **ID do Quadro:** O ID que aparece na URL do seu quadro no Trello.
 
 # Instale as dependências
 pip install requests
