@@ -22,6 +22,10 @@ Este script automatiza a organização anual do seu Trello, criando listas para 
 2. **Trello API Key e Token:**
 3. **ID do Quadro:** O ID que aparece na URL do seu quadro no Trello.
 
+## video do resultado!
+<a href="https://youtu.be/pBW5QZ7_R6o?list=PLp0FvpKzHs0nJCBBKhWB2-XezWcUcwCiA" target="_blank"><img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white">
+  </a>
+
 ### 🌐 Conecte-se comigo
 <div align="left">
   <a href="https://www.linkedin.com/in/vinicius-alves-aa1651171" target="_blank"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white"></a>
