@@ -1,0 +1,86 @@
+import requests
+import calendar
+import time
+from datetime import datetime
+
+# --- CONFIGURAÇÕES ---
+API_KEY = 'SUA_API_KEY'
+TOKEN = 'SEU_TOKEN'
+BOARD_ID = 'ID_DO_SEU_QUADRO_TESTE'
+ANO_ALVO = 2026
+
+# MODO_TESTE = True -> Apaga as listas atuais do quadro antes de começar
+# MODO_TESTE = False -> Apenas adiciona as novas listas
+MODO_TESTE = True 
+
+CORES = {'DOMINGO': 'red', 'FERIADO': 'yellow', 'NORMAL': 'green', 'INEXISTENTE': 'sky'}
+FERIADOS = ["01/01", "21/04", "01/05", "07/09", "12/10", "02/11", "15/11", "25/12"]
+
+def trello_req(method, endpoint, params=None):
+    url = f"https://api.trello.com/1/{endpoint}"
+    query = {'key': API_KEY, 'token': TOKEN}
+    if params: query.update(params)
+    
+    if method == "POST": return requests.post(url, params=query).json()
+    if method == "GET": return requests.get(url, params=query).json()
+    if method == "PUT": return requests.put(url, params=query).json()
+
+def limpar_quadro():
+    print("🧹 Limpando quadro de teste...")
+    listas = trello_req("GET", f"boards/{BOARD_ID}/lists")
+    for lista in listas:
+        # No Trello, você não "deleta" uma lista, você a arquiva (closed = true)
+        trello_req("PUT", f"lists/{lista['id']}", {'closed': 'true'})
+    print("✅ Quadro limpo!")
+
+# --- EXECUÇÃO ---
+
+if MODO_TESTE:
+    limpar_quadro()
+
+meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 
+         'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
+
+for indice_mes, nome_mes in enumerate(meses, start=1):
+    print(f"📅 Criando {nome_mes}...")
+    
+    # Cria a Lista
+    lista = trello_req("POST", "lists", {'name': nome_mes, 'idBoard': BOARD_ID})
+    id_lista = lista['id']
+    
+    ultimo_dia = calendar.monthrange(ANO_ALVO, indice_mes)[1]
+    
+    for dia in range(1, 32):
+        data_str = f"{dia:02d}/{indice_mes:02d}"
+        
+        if dia > ultimo_dia:
+            cor = CORES['INEXISTENTE']
+            nome_card = f"{data_str} (Vazio)"
+            entrega = None
+        else:
+            entrega = datetime(ANO_ALVO, indice_mes, dia, 17, 0).isoformat()
+            dia_semana = calendar.weekday(ANO_ALVO, indice_mes, dia)
+            if data_str in FERIADOS: cor = CORES['FERIADO']
+            elif dia_semana == 6: cor = CORES['DOMINGO']
+            else: cor = CORES['NORMAL']
+            nome_card = data_str
+
+        # Cria o Card
+        card = trello_req("POST", "cards", {
+            'idList': id_lista, 
+            'name': nome_card, 
+            'due': entrega
+        })
+        
+        # Adiciona a Etiqueta
+        trello_req("POST", f"cards/{card['id']}/labels", {'color': cor})
+
+        # Adiciona Checklist apenas em dias válidos
+        if dia <= ultimo_dia:
+            chk = trello_req("POST", f"cards/{card['id']}/checklists", {'name': 'Check-out'})
+            trello_req("POST", f"checklists/{chk['id']}/checkItems", {'name': 'Confirmado'})
+        
+        # Pequena pausa para não travar a API do Trello
+        time.sleep(0.05)
+
+print("\n🚀 Automação concluída no quadro de teste!")
