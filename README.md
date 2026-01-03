@@ -19,7 +19,7 @@ Este script automatiza a organização anual do seu Trello, criando listas para 
 ## 🛠️ Pré-requisitos
 
 1. **Python 3.x** instalado.
-2. **Trello API Key e Token:** Obtenha em [trello.com/app-key](https://trello.com/app-key).
+2. **Trello API Key e Token:**
 3. **ID do Quadro:** O ID que aparece na URL do seu quadro no Trello.
 
 ## 📦 Instalação
