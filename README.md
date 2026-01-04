@@ -23,7 +23,7 @@ Este script automatiza a organização anual do seu Trello, criando listas para 
 3. **ID do Quadro:** O ID que aparece na URL do seu quadro no Trello.
 
 ## video do resultado!
-<a href="https://youtu.be/pBW5QZ7_R6o?list=PLp0FvpKzHs0nJCBBKhWB2-XezWcUcwCiA" target="_blank"><img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white">
+<a href="https://www.youtube.com/embed/vf5yOD1W4VI?si=4w-j8uPz1OV5fnb-" target="_blank"><img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white">
   </a>
 
 ### 🌐 Conecte-se comigo
